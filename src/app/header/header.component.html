@@ -1,3 +1,17 @@
+<mat-toolbar color="primary">
+  <span>
+    OnlineShopping Application
+  </span>
+  <span class="space-button"></span>
+  <button *ngIf = "!isLoggedIn()" mat-raised-button color="primary" routerLink="/login">
+    login
+  </button>
+  <button *ngIf = "isLoggedIn()" mat-raised-button color="warn" (click) = "logout()">
+    logout
+  </button>
+
+</mat-toolbar>
+<!-- 
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
     <div class="container-fluid">
       <a class="navbar-brand" href="#">Angular + Jwt</a>
@@ -23,4 +37,4 @@
         
       </div>
     </div>
-  </nav>
+  </nav> -->
