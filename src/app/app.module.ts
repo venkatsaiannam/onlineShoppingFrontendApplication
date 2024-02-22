@@ -23,7 +23,9 @@ import {MatInputModule} from '@angular/material/input';
 import { AddNewProductComponent } from './add-new-product/add-new-product.component'
 import {MatGridListModule} from '@angular/material/grid-list';
 import { DragDirective } from './drag.directive';
-
+import { ShowProductDetailsComponent } from './show-product-details/show-product-details.component';
+import {MatTableModule} from '@angular/material/table';
+import {MatIconModule} from '@angular/material/icon';
 
 @NgModule({
   declarations: [
@@ -35,7 +37,8 @@ import { DragDirective } from './drag.directive';
     HomeComponent,
     UserComponent,
     AddNewProductComponent,
-    DragDirective
+    DragDirective,
+    ShowProductDetailsComponent
   ],
   imports: [
     BrowserModule,
@@ -48,7 +51,9 @@ import { DragDirective } from './drag.directive';
     MatButtonModule,
     MatFormFieldModule,
     MatInputModule,
-    MatGridListModule
+    MatGridListModule,
+    MatTableModule,
+    MatIconModule
   ],
   exports:[
     HeaderComponent,
