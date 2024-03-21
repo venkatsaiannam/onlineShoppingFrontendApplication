@@ -1,3 +1,4 @@
+import { Product } from './_model/product.model';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
@@ -9,19 +10,27 @@ import { AuthGuard } from './_auth/auth.guard';
 import { AddNewProductComponent } from './add-new-product/add-new-product.component';
 import { ShowProductDetailsComponent } from './show-product-details/show-product-details.component';
 import { ProductResolverService } from './product-resolver.service';
+import { ProductViewDetailsComponent } from './product-view-details/product-view-details.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
-  { path: 'admin', component: AdminComponent,canActivate:[AuthGuard],data:{roles:['Admin']} },
+  { path: 'admin', component: AdminComponent, canActivate: [AuthGuard], data: { roles: ['Admin'] } },
   { path: 'login', component: LoginComponent },
   { path: 'forbidden', component: ForbiddenComponent },
-  { path: 'user', component: UserComponent,canActivate:[AuthGuard],data:{roles:['User']} },
-  { path: 'addNewProduct', component:AddNewProductComponent,canActivate:[AuthGuard],data:{roles:['Admin']},
-    resolve :{
+  { path: 'user', component: UserComponent, canActivate: [AuthGuard], data: { roles: ['User'] } },
+  {
+    path: 'addNewProduct', component: AddNewProductComponent, canActivate: [AuthGuard], data: { roles: ['Admin'] },
+    resolve: {
       product: ProductResolverService
     }
   },
-  { path: 'showProductDetails',component:ShowProductDetailsComponent,canActivate:[AuthGuard],data:{roles:['Admin']}},
+  { path: 'showProductDetails', component: ShowProductDetailsComponent, canActivate: [AuthGuard], data: { roles: ['Admin'] } },
+  {
+    path: 'productViewDetails', component: ProductViewDetailsComponent,
+    resolve: {
+      product: ProductResolverService
+    }
+  }
 
 ];
 
