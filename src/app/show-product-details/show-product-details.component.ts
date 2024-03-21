@@ -17,7 +17,7 @@ export class ShowProductDetailsComponent {
 
   productDetails: Product[] = [];
 
-  displayedColumns: string[] = ['ID', 'Product Name', 'Product Description', 'Product Discounted Price', 'Product Actual Price', 'Images', 'Edit', 'Delete'];
+  displayedColumns: string[] = ['ID', 'Product Name', 'description', 'Product Discounted Price', 'Product Actual Price', 'Actions'];
 
   constructor(private productService: ProductService, public imagesDialog: MatDialog, private imageProcessingService: ImageProcessingService
     ,private router:Router) {
