@@ -29,7 +29,7 @@
                             style="text-decoration: line-through;">{{product.productActualPrice}}</b></b>
                 </div>
                 <div class="mt-5 text-center">
-                    <button mat-raised-button color="warn" style="width:25%">Buy Now</button>
+                    <button mat-raised-button color="warn" style="width:25%" (click)="buyProduct(product.productId)">Buy Now</button>
                 </div>
 
             </div>
