@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Product } from '../_model/product.model';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-product-view-details',
@@ -13,7 +13,7 @@ export class ProductViewDetailsComponent {
 
   product!:Product;
 
-  constructor(private activatedRoute:ActivatedRoute){
+  constructor(private activatedRoute:ActivatedRoute,private router:Router){
 
   }
 
@@ -26,4 +26,11 @@ export class ProductViewDetailsComponent {
     this.selectProductIndex=i;
   }
 
+
+  public buyProduct(productId){
+    this.router.navigate(['/buyProduct',{
+      isSingleProductCheckout:true,
+      id:productId
+    }]);
+  }
 }
