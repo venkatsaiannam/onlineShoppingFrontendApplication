@@ -16,11 +16,14 @@ import { Route, Router } from '@angular/router';
 export class ShowProductDetailsComponent {
 
   productDetails: Product[] = [];
+  pageNumber: number = 0;
+  showTable =false;
+  showLoadMore = false;
 
   displayedColumns: string[] = ['ID', 'Product Name', 'description', 'Product Discounted Price', 'Product Actual Price', 'Actions'];
 
   constructor(private productService: ProductService, public imagesDialog: MatDialog, private imageProcessingService: ImageProcessingService
-    ,private router:Router) {
+    , private router: Router) {
 
   }
 
@@ -28,19 +31,34 @@ export class ShowProductDetailsComponent {
     this.getAllProducts()
   }
   public getAllProducts() {
-    this.productService.getAllProducts()
+    this.showTable = false
+    this.productService.getAllProducts(this.pageNumber)
       .pipe(
         map((x: Product[], i) => x.map((product: Product) => this.imageProcessingService.createImages(product)))
       )
       .subscribe(
         (response: Product[]) => {
-          this.productDetails = response;
-          console.log(response);
+          if(response.length == 12){
+            this.showLoadMore = true
+          }
+          else{
+            this.showLoadMore = false
+          }
+          response.forEach(p => this.productDetails.push(p))
+          //this.productDetails = response;
+          console.log("respose",response);
+          console.log("productDetails",this.productDetails)
+          this.showTable = true
         },
         (error: HttpErrorResponse) => {
           console.log(error)
         }
       )
+  }
+
+  loadMoreProducts() {
+    this.pageNumber = this.pageNumber + 1;
+    this.getAllProducts();
   }
 
 
@@ -72,8 +90,8 @@ export class ShowProductDetailsComponent {
     );
   }
 
-  editProductDetails(productId:number){
-    this.router.navigate(['/addNewProduct',{productId:productId}]);
+  editProductDetails(productId: number) {
+    this.router.navigate(['/addNewProduct', { productId: productId }]);
   }
 
 
