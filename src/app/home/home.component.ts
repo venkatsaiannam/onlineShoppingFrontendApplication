@@ -14,25 +14,33 @@ import { Router } from '@angular/router';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  productDetails: Product[] | undefined;
-  constructor(private userService:UserAuthService, private productService:ProductService,private imageProcessingService:ImageProcessingService,
-    private router:Router){
+  productDetails: Product[] = [];
+  pageNumber: number = 0;
+  showLoadButton = false;
+  constructor(private userService: UserAuthService, private productService: ProductService, private imageProcessingService: ImageProcessingService,
+    private router: Router) {
 
   }
 
-  ngOnInit(){
-      //this.userService.clear();
-      this.getAllProducts()
+  ngOnInit() {
+    //this.userService.clear();
+    this.getAllProducts()
   }
 
   public getAllProducts() {
-    this.productService.getAllProducts()
+    this.productService.getAllProducts(this.pageNumber)
       .pipe(
         map((x: Product[], i) => x.map((product: Product) => this.imageProcessingService.createImages(product)))
       )
       .subscribe(
         (response: Product[]) => {
-          this.productDetails = response;
+          if (response.length == 12) {
+            this.showLoadButton = true
+          }
+          else{
+            this.showLoadButton = false
+          }
+          response.forEach(p => this.productDetails.push(p));
           console.log(response);
         },
         (error: HttpErrorResponse) => {
@@ -41,8 +49,13 @@ export class HomeComponent implements OnInit {
       )
   }
 
-  public showProductDetails(productId){
-    this.router.navigate(['/productViewDetails',{productId:productId}])
+  public showProductDetails(productId) {
+    this.router.navigate(['/productViewDetails', { productId: productId }])
   }
-  
+
+  public loadMoreProduct() {
+    this.pageNumber = this.pageNumber + 1;
+    this.getAllProducts()
+  }
+
 }
