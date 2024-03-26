@@ -17,7 +17,7 @@ export class ShowProductDetailsComponent {
 
   productDetails: Product[] = [];
   pageNumber: number = 0;
-  showTable =false;
+  showTable = false;
   showLoadMore = false;
 
   displayedColumns: string[] = ['ID', 'Product Name', 'description', 'Product Discounted Price', 'Product Actual Price', 'Actions'];
@@ -30,24 +30,24 @@ export class ShowProductDetailsComponent {
   ngOnInit() {
     this.getAllProducts()
   }
-  public getAllProducts() {
+  public getAllProducts(searchkeyword:string = "") {
     this.showTable = false
-    this.productService.getAllProducts(this.pageNumber)
+    this.productService.getAllProducts(this.pageNumber,searchkeyword)
       .pipe(
         map((x: Product[], i) => x.map((product: Product) => this.imageProcessingService.createImages(product)))
       )
       .subscribe(
         (response: Product[]) => {
-          if(response.length == 12){
+          if (response.length == 12) {
             this.showLoadMore = true
           }
-          else{
+          else {
             this.showLoadMore = false
           }
           response.forEach(p => this.productDetails.push(p))
           //this.productDetails = response;
-          console.log("respose",response);
-          console.log("productDetails",this.productDetails)
+          console.log("respose", response);
+          console.log("productDetails", this.productDetails)
           this.showTable = true
         },
         (error: HttpErrorResponse) => {
@@ -92,6 +92,14 @@ export class ShowProductDetailsComponent {
 
   editProductDetails(productId: number) {
     this.router.navigate(['/addNewProduct', { productId: productId }]);
+  }
+
+  searchByKeyword(searchkeyword) {
+    console.log(searchkeyword);
+    this.pageNumber = 0;
+    this.productDetails = [];
+    this.getAllProducts(searchkeyword);
+
   }
 
 
