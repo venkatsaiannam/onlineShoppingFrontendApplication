@@ -16,8 +16,10 @@
 
   <button mat-raised-button color="primary" routerLink="/">Home</button>
   <button mat-raised-button color="primary" *ngIf="!isAdmin()" routerLink="/cart">Cart</button>
+  <button mat-raised-button color="primary" *ngIf="!isAdmin()" routerLink="/myOrders">MyOrders</button>
   <button mat-raised-button color="primary" *ngIf="isAdmin()" routerLink="/addNewProduct">Add New Product</button>
   <button mat-raised-button color="primary" *ngIf="isAdmin()" routerLink="/showProductDetails">Show All Products</button>
+  <button mat-raised-button color="primary" *ngIf="isAdmin()" routerLink="/orderInformation">Order Information</button>
   
 
 </mat-toolbar>
